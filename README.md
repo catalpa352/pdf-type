@@ -14,3 +14,5 @@ store different types of PDF files to facilitate subsequent document content ide
   - PDF only include Table
 - **05-Report**:
   - Reports from formal document
+- **06-Poster**:
+  - Posters from everyday life
