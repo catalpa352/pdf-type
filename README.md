@@ -17,4 +17,8 @@ store different types of PDF files to facilitate subsequent document content ide
 - **06-Poster**:
   - Posters from everyday life
 - **07-Printing_plate**:
-  - pdf made by printing 
+  - pdf made by printing
+- **pdf_result_visualization**:
+  - download pdfa-eng-train-xxxx.tar from https://huggingface.co/datasets/pixparse/pdfa-eng-wds and decompress
+  - download idl-train-xxxxx.tar from https://huggingface.co/datasets/pixparse/idl-wds and decompress
+  - use idl-wds_visualize_pdf_information.py and pdfa-eng-wds_visualize_pdf_information.py to visulize the result
