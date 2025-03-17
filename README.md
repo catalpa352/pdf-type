@@ -16,3 +16,5 @@ store different types of PDF files to facilitate subsequent document content ide
   - Reports from formal document
 - **06-Poster**:
   - Posters from everyday life
+- **07-Printing_plate**:
+  - pdf made by printing 
