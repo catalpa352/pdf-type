@@ -84,7 +84,7 @@ def test_gemini(apikey, text, image_path, markdown_content):
 
 
 if __name__ == '__main__':
-    apikey = "AIzaSyA_U5nVGQcQetZ1pz4BMzvH9wYpdaNh_K8"
+    apikey = "AIxxxxxxxxxxxxx"
 
     # 输入路径
     pdf_path = '/Users/xiaoyangtao/PycharmProjects/pdf_process/data/07-Printing_plate/image.pdf'  # 输入你的 PDF 路径
