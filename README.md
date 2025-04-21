@@ -31,5 +31,5 @@ store different types of PDF files to facilitate subsequent document content ide
   - python gemini_modify.py --pdf input_pdf-path --markdown input_markdown_path --output_image pdf_converted_image_path --output_markdown output_markdown_path
 - **model_improve_markdown/KIMI-VLM-modify.py command use**:
   - python KIMI-VLM-modify.py --pdf input_pdf-path --markdown input_markdown_path --output_image pdf_converted_image_path --output_markdown output_markdown_path
-- **model_improve_markdown/KIMI-VLM-modify.py command use**:
-  - python KIMI-VLM-modify.py --pdf input_pdf-path --markdown input_markdown_path --output_image pdf_converted_image_path --output_markdown output_markdown_path --model_id  Qwen/Qwen2.5-VL-32B-Instruct or Qwen/Qwen2.5-VL-7B-Instruct
+- **model_improve_markdown/Qwen2.5-VLM-api.py command use**:
+  - python Qwen2.5-VLM-api.py --pdf input_pdf-path --markdown input_markdown_path --output_image pdf_converted_image_path --output_markdown output_markdown_path --model_id  Qwen/Qwen2.5-VL-32B-Instruct or Qwen/Qwen2.5-VL-7B-Instruct
