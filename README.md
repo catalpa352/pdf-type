@@ -22,3 +22,18 @@ store different types of PDF files to facilitate subsequent document content ide
   - download pdfa-eng-train-xxxx.tar from https://huggingface.co/datasets/pixparse/pdfa-eng-wds and decompress
   - download idl-train-xxxxx.tar from https://huggingface.co/datasets/pixparse/idl-wds and decompress
   - use idl-wds_visualize_pdf_information.py and pdfa-eng-wds_visualize_pdf_information.py to visulize the result
+
+
+- **gemini_maskdown/docling_markdown.py command use**:
+  - python docling_markdown.py --pdf input_pdf_path --output output_markdown_path
+- **gemini_maskdown/gemini_mardkown.py command use**:
+  - python gemini-markdown.py --pdf input_pdf-path --markdown input_markdown_path --output_image pdf_converted_image_path
+- **model_improve_markdown/gemini_modify.py command use**:
+  - python gemini_modify.py --pdf input_pdf-path --markdown input_markdown_path --output_image pdf_converted_image_path --output_markdown output_markdown_path
+- **model_improve_markdown/KIMI-VLM-modify.py command use**:
+  - python KIMI-VLM-modify.py --pdf input_pdf-path --markdown input_markdown_path --output_image pdf_converted_image_path --output_markdown output_markdown_path
+- **model_improve_markdown/Qwen2.5-VLM-api.py command use**:
+  - python Qwen2.5-VLM-api.py --pdf input_pdf-path --markdown input_markdown_path --output_image pdf_converted_image_path --output_markdown output_markdown_path --model_id  Qwen/Qwen2.5-VL-32B-Instruct or Qwen/Qwen2.5-VL-7B-Instruct
+
+
+

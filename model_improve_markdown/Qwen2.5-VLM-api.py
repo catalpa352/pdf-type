@@ -7,6 +7,16 @@ from PIL import Image
 from dotenv import load_dotenv
 import os
 
+# 定义 ModelScope 的 API 配置
+load_dotenv()
+apikey = os.getenv("api_key")
+
+client = OpenAI(
+    base_url='https://api-inference.modelscope.cn/v1/',
+    api_key=apikey,  # 替换为你的 ModelScope Token
+)
+
+
 def pdf_to_image(pdf_path, output_image_path):
     """将单页 PDF 文件转换为图片"""
     try:
@@ -95,22 +105,12 @@ if __name__ == '__main__':
     # 添加命令行参数
     parser.add_argument("--pdf", required=True, help="输入的 PDF 文件路径")
     parser.add_argument("--markdown", required=True, help="输入的 Markdown 文件路径")
-    parser.add_argument("--output_image", default="converted_from_pdf.png", help="输出的pdf转换的图片路径")
+    parser.add_argument("--output_image", default="converted_from_pdf.png", help="输出pdf转换的图片路径")
     parser.add_argument("--output_markdown", required=True, help="改进后的 Markdown 文件路径")
-    parser.add_argument("--model_id", default="Qwen/Qwen2.5-VL-7B-Instruct", help="使用的模型 ID")
+    parser.add_argument("--model_id", help="使用的模型 ID")
 
     # 解析命令行参数
     args = parser.parse_args()
-
-    # 加载环境变量
-    load_dotenv()
-    apikey = os.getenv("api_key")
-
-    # 配置 OpenAI 客户端
-    client = OpenAI(
-        base_url='https://api-inference.modelscope.cn/v1/',
-        api_key=apikey,  # 替换为你的 ModelScope Token
-    )
 
     # 输入路径
     pdf_path = args.pdf
