@@ -1,4 +1,4 @@
-# markdown文件提交gemini
+import argparse
 import google.generativeai as genai
 from PIL import Image
 import base64
@@ -6,7 +6,6 @@ import fitz  # PyMuPDF
 import io
 from dotenv import load_dotenv
 import os
-import argparse
 
 def pdf_to_image(pdf_path, output_image_path):
     """将单页 PDF 文件转换为图片"""
@@ -50,7 +49,17 @@ def read_markdown_content(markdown_path):
         return ""
 
 
-def test_gemini(apikey, text, image_path, markdown_content):
+def save_markdown_content(markdown_content, output_path):
+    """将 Markdown 内容保存到文件"""
+    try:
+        with open(output_path, "w", encoding="utf-8") as file:
+            file.write(markdown_content)
+        print(f"Markdown 内容已成功保存到文件：{output_path}")
+    except Exception as e:
+        print(f"Markdown 文件保存失败：{e}")
+
+
+def test_gemini(apikey, text_with_markdown, image_path, output_markdown_path):
     # 配置 API 密钥
     genai.configure(api_key=apikey, transport='rest')
     model = genai.GenerativeModel('gemini-2.0-flash')
@@ -65,14 +74,13 @@ def test_gemini(apikey, text, image_path, markdown_content):
 
     # 构造输入内容
     contents = [
-        {"text": text},  # 文本部分
+        {"text": text_with_markdown},  # 提示词部分，包含 Markdown 内容
         {
             "inline_data": {
                 "mime_type": "image/png",  # 根据图片格式设置 MIME 类型
                 "data": img_base64  # 图片的 Base64 编码数据
             }
-        },  # 图片部分
-        {"text": f"\n下面是 Markdown 文档的内容：\n{markdown_content}"}  # 添加 Markdown 内容
+        }  # 图片部分
     ]
 
     # 调用模型
@@ -81,8 +89,12 @@ def test_gemini(apikey, text, image_path, markdown_content):
         print("模型响应：")
         print(response.text)
 
+        # 保存模型生成的内容到 Markdown 文件
+        save_markdown_content(response.text, output_markdown_path)
+
     except Exception as e:
         print(f"调用模型失败：{e}")
+
 
 if __name__ == '__main__':
     # 创建 ArgumentParser 对象
@@ -91,7 +103,8 @@ if __name__ == '__main__':
     # 添加命令行参数
     parser.add_argument("--pdf", required=True, help="输入的 PDF 文件路径")
     parser.add_argument("--markdown", required=True, help="输入的 Markdown 文件路径")
-    parser.add_argument("--output_image", default="converted_from_pdf.png", help="中间pdf转换的图片路径")
+    parser.add_argument("--output_image", default="converted_from_pdf.png", help="输出的pdf转换到图片路径")
+    parser.add_argument("--output_markdown", required=True, help="改进后的 Markdown 文件路径")
 
     # 解析命令行参数
     args = parser.parse_args()
@@ -104,6 +117,7 @@ if __name__ == '__main__':
     pdf_path = args.pdf
     markdown_path = args.markdown
     output_image_path = args.output_image
+    output_markdown_path = args.output_markdown
 
     # 将 PDF 转换为图片
     pdf_to_image(pdf_path, output_image_path)
@@ -115,33 +129,27 @@ if __name__ == '__main__':
     else:
         print(f"Markdown 文档内容：\n{markdown_content}")
 
+        # 构造提示词，包含 Markdown 内容
+        text_with_markdown = f"""
+        请根据由PDF转换成的图片内容，在OCR结果生成的Markdown文档内容基础上输出一个效果更好的Markdown内容,其他多余的内容不需要输出。
+        效果更好markdown内容注意事项：
+        1.图片可以使用<image>标签代替，图片的具体内容不需要输出
+        2.纯文本，表格，公式，代码参考图片内容在OCR结果生成的Markdown文档内容基础上进行修改
+        3.请你自己检查一下输出的markdown内容是否合理，不要比OCR结果生成的Markdown文档内容效果更差
+        4.输出内容中不要添加：```markdown```这些内容方便能够直接可视化
+        Markdown 文档内容如下：
+        ```
+        {markdown_content}
+        ```
+
+
+        后面的内容为已转换为 Base64 编码的PDF图片内容：
+        """
+
         # 使用转换后的图片测试 Gemini Pro Vision 模型
         test_gemini(
             apikey,
-            text="""
-            请根据由PDF转换成的图片内容检查以下由OCR结果生成的Markdown文档内容与排版是否一致，并用中文列出所有错误，忽略Markdown语言本身的错误。
-            以下是常见的OCR结果错误示例，请在Markdown文档中寻找类似问题：
-               1.数学公式错误：公式没有被识别或者公式内容识别有误。
-               2.表格错误：表格结构丢失或者表格内容识别错误。
-               3.代码错误：代码没有被识别或者代码内容识别错误
-               4.排版错误：存在内容出现的顺序不正确。
-               5.图片错误：图片没有识别或者图片内容识别错误
-               6.段落分割错误：OCR结果可能会错误地将段落分割成多个部分，或者将不同段落合并在一起。
-               7.纯文本错误： 纯文本没有被识别或者纯文本内容错误
-
-
-            输出格式要求：使用数字标号一个个错误，不要举例子所有错误都要输出，其他内容不需要
-
-            输出例子：
-            1.数学公式错误：公式不完整
-            2.表格错误： 表格缺失内容
-            3.代码错误：  import data代码没有被识别
-            4.排版错误： data出现在image前面
-            5.段落分割错误：一段被分成了三段
-
-            请您仔细比对图片和Markdown文档内容，找出并列出所有的差异和错误，以便进行修正，如果有其他常见的OCR结果错误也需要列出来。
-            """
-            ,
+            text_with_markdown=text_with_markdown,
             image_path=output_image_path,
-            markdown_content=markdown_content
+            output_markdown_path=output_markdown_path
         )
