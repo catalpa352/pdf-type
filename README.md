@@ -35,5 +35,15 @@ store different types of PDF files to facilitate subsequent document content ide
 - **model_improve_markdown/Qwen2.5-VLM-api.py command use**:
   - python Qwen2.5-VLM-api.py --pdf input_pdf-path --markdown input_markdown_path --output_image pdf_converted_image_path --output_markdown output_markdown_path --model_id  Qwen/Qwen2.5-VL-32B-Instruct or Qwen/Qwen2.5-VL-7B-Instruct
 
+- **model_justify_better_markdown/gemini_2.0_flask.py command use**:
+  - python gemini_2.0_flask.py --pdf_path /path/to/your/pdf/file.pdf --markdown_path /path/to/your/markdown/file.md --output_image_path /path/to/output/image.png
+- **model_justify_better_markdown/Qwen-vlm.py command use**:
+  - python Qwen-vlm.py --pdf_path /path/to/your/pdf/file.pdf --markdown_path /path/to/your/markdown/file.md --output_image_path /path/to/output/image.png --model_id  Qwen/Qwen2.5-VL-7B-Instruct or Qwen/Qwen2.5-VL-32B-Instruct
+- **model_justify_better_markdown/KIMI-VLM-A3B-Instruct.py command use**:
+  - python KIMI-VLM-A3B-Instruct.py --pdf_path ./papers/double_column/table_code.pdf --markdown_path ./Kimi-VL-A3B-Instruct_paper/double_column/table_code.md --output_image_path converted_from_pdf.png
+
+
+
+
 
 
