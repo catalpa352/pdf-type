@@ -26,7 +26,7 @@ store different types of PDF files to facilitate subsequent document content ide
 
 - **gemini_maskdown/docling_markdown.py command use**:
   - python docling_markdown.py --pdf input_pdf_path --output output_markdown_path
-- **gemini_maskdown/gemini_mardkown.py command use**:
+- **gemini_maskdown/gemini_markdown.py command use**:
   - python gemini-markdown.py --pdf input_pdf-path --markdown input_markdown_path --output_image pdf_converted_image_path
 - **model_improve_markdown/gemini_modify.py command use**:
   - python gemini_modify.py --pdf input_pdf-path --markdown input_markdown_path --output_image pdf_converted_image_path --output_markdown output_markdown_path
@@ -41,6 +41,12 @@ store different types of PDF files to facilitate subsequent document content ide
   - python Qwen-vlm.py --pdf_path /path/to/your/pdf/file.pdf --markdown_path /path/to/your/markdown/file.md --output_image_path /path/to/output/image.png --model_id  Qwen/Qwen2.5-VL-7B-Instruct or Qwen/Qwen2.5-VL-32B-Instruct
 - **model_justify_better_markdown/KIMI-VLM-A3B-Instruct.py command use**:
   - python KIMI-VLM-A3B-Instruct.py --pdf_path ./papers/double_column/table_code.pdf --markdown_path ./Kimi-VL-A3B-Instruct_paper/double_column/table_code.md --output_image_path converted_from_pdf.png
+
+- **RolmOCR model deploy and use**:
+  - use pdf_to_image.py to convert all pdf files in specfic folder to image: python pdf_to_image.py --pdf_folder /path/to/your/pdf --output_folder /path/to/output
+  - download the RolmOCR model from Huggingface: python download_RolmOCR.py
+  - use vllm to deploy the model: vllm serve reducto/RolmOCR
+  - use RolmOCR to extract content from image and save to a markdown file: python RolmOCR.py --image_path /path/to/your/image/123.png --output_md /path/to/output/output.md
 
 
 
